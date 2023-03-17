@@ -11,7 +11,7 @@
         <div class="container">    
             <h2> Global Superstore </h2>
             <form method="post" th:object="${order}" th:action="@{/handleSubmit}">
-                <select class="select">
+                <select class="select" th:field="*{category}">
                     <option style="color:blue" th:value="${''}">Choose Category</option>
                     <option th:each="category: ${categories}" th:text="${category}" th:value="${category}"></option>
                 </select>

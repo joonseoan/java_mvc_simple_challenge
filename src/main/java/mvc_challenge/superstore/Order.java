@@ -8,7 +8,7 @@ public class Order implements Serializable {
   private String id;
   private String category;
   private Item item;
-  private Date date;
+  private String date;
 
   public Order(Item item) {
     this.id = UUID.randomUUID().toString();
@@ -39,11 +39,11 @@ public class Order implements Serializable {
     this.item = item;
   }
 
-  public Date getDate() {
+  public String getDate() {
     return date;
   }
 
-  public void setDate(Date date) {
+  public void setDate(String date) {
     this.date = date;
   }
 

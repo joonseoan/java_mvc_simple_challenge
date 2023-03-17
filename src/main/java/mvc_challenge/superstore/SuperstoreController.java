@@ -4,21 +4,34 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 public class SuperstoreController {
   List<Order> orders = new ArrayList<>();
 
   @GetMapping("/")
-  public String getForm(Model model) {
-    Item item = new Item();
-    Order order = new Order(item);
+  public String getForm(Model model, @RequestParam(required = false) String id) throws IndexOutOfBoundsException {
+    Order order;
+
+      System.out.println("id: " + id);
+
+      int index = getIndex(id);
+      // need to find out why it is -1
+      System.out.println("index: " + index);
+
+      if (index > -1) {
+        order = orders.get(index);
+      } else {
+        Item item = new Item();
+        order = new Order(item);
+      }
 
     model.addAttribute("categories", Constants.CATEGORIES);
-//    model.addAttribute("item", item);
     model.addAttribute("order", order);
 
     return "form";
@@ -26,12 +39,31 @@ public class SuperstoreController {
 
   @PostMapping("/handleSubmit")
   public String handleOrderSubmit(Order order) {
-    System.out.println(order);
+    int index = getIndex(order.getId());
+
+    if (index > -1) {
+      orders.set(index, order);
+    } else {
+      orders.add(order);
+    }
+
     return "redirect:/inventory";
   }
 
   @GetMapping("/inventory")
   public String getInventory(Model model) {
+    model.addAttribute("orders", orders);
+
     return "inventory";
+  }
+
+  private int getIndex(String id) throws NullPointerException {
+    for (int i = 0; i < orders.size(); i++) {
+      if (orders.get(i).getId() == id) {
+        return i;
+      }
+    }
+
+    return -1;
   }
 }

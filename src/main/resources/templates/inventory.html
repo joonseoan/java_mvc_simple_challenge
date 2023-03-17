@@ -19,14 +19,14 @@
                  <th>Order Date</th>
                  <th> </th>
               </tr>
-              <tr>
-                 <td >Furniture</th>
-                 <td >Table</td>
-                 <td type="currency" >2342.34</td>
-                 <td type="currency">1657.23</td>
-                 <td type="date">1996-02-02</td>
+              <tr th:each="order: ${orders}">
+                 <td th:text="${order.category}"></th>
+                 <td th:text="${order.item.name}"></td>
+                 <td type="currency" th:text="${order.item.price}" ></td>
+                 <td type="currency" th:text="${order.item.discount}"></td>
+                 <td type="date" th:text="${order.date}"></td>
                  <td>
-                    <a role="button" style="color:white; background-color: #263238" class="table-button">Update</a>
+                    <a role="button" style="color:white; background-color: #263238" class="table-button" th:href="@{/(id = ${order.id})}">Update</a>
                  </td>
               </tr>
            </table>
