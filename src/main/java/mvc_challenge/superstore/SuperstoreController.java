@@ -18,18 +18,14 @@ public class SuperstoreController {
   public String getForm(Model model, @RequestParam(required = false) String id) throws IndexOutOfBoundsException {
     Order order;
 
-      System.out.println("id: " + id);
+    int index = getIndex(id);
 
-      int index = getIndex(id);
-      // need to find out why it is -1
-      System.out.println("index: " + index);
-
-      if (index > -1) {
-        order = orders.get(index);
-      } else {
-        Item item = new Item();
-        order = new Order(item);
-      }
+    if (index > -1) {
+      order = orders.get(index);
+    } else {
+      Item item = new Item();
+      order = new Order(item);
+    }
 
     model.addAttribute("categories", Constants.CATEGORIES);
     model.addAttribute("order", order);
@@ -59,7 +55,7 @@ public class SuperstoreController {
 
   private int getIndex(String id) throws NullPointerException {
     for (int i = 0; i < orders.size(); i++) {
-      if (orders.get(i).getId() == id) {
+      if (orders.get(i).getId().equals(id)) {
         return i;
       }
     }
