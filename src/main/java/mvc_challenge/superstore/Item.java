@@ -4,8 +4,8 @@ import java.io.Serializable;
 
 public class Item implements Serializable {
   private String name;
-  private String price;
-  private String discount;
+  private Double price;
+  private Double discount;
 
   public String getName() {
     return name;
@@ -15,19 +15,21 @@ public class Item implements Serializable {
     this.name = name;
   }
 
-  public String getPrice() {
+  public Double getPrice() {
     return price;
   }
 
-  public void setPrice(String price) {
+  // [IMPORTANT] Double can be converted into String in the client
+  public void setPrice(Double price) {
     this.price = price;
   }
 
-  public String getDiscount() {
+  public Double getDiscount() {
     return discount;
   }
 
-  public void setDiscount(String discount) {
+  // [IMPORTANT] Double can be converted into String in the client
+  public void setDiscount(Double discount) {
     this.discount = discount;
   }
 

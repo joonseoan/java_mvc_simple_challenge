@@ -12,7 +12,7 @@ import java.util.UUID;
 
 @Controller
 public class SuperstoreController {
-  List<Order> orders = new ArrayList<>();
+  private List<Order> orders = new ArrayList<>();
 
   @GetMapping("/")
   public String getForm(Model model, @RequestParam(required = false) String id) throws IndexOutOfBoundsException {

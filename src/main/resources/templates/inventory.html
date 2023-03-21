@@ -22,9 +22,23 @@
               <tr th:each="order: ${orders}">
                  <td th:text="${order.category}"></th>
                  <td th:text="${order.item.name}"></td>
-                 <td type="currency" th:text="${order.item.price}" ></td>
-                 <td type="currency" th:text="${order.item.discount}"></td>
-                 <td type="date" th:text="${order.date}"></td>
+                  <!-- Use Thymeleaf lib to display the currency -->
+                 <td th:text="${#numbers.formatCurrency(order.item.price)}" ></td>
+                 <td th:text="${#numbers.formatCurrency(order.item.discount)}"></td>
+                <!--
+                    // 1) Really [IMPORTANT]
+                    Why formatDate, not date?
+                    if we enter "formatDate", then it actually looks for some type of `getter`
+                    that says `getFormatDate()` in the POJO class.
+
+                    And then that is going to return String type of value in this case.
+
+                    <td type="date" th:text="${order.formatDate}"></td>
+
+                    // 2) Or otherwise we can use the Thymeleaf lib in the client side.
+                    // FYI, the month must use the upper letter.
+                -->
+                 <td type="date" th:text="${#dates.format(order.date, 'yyyy-MM-dd')}"></td>
                  <td>
                     <a role="button" style="color:white; background-color: #263238" class="table-button" th:href="@{/(id = ${order.id})}">Update</a>
                  </td>

@@ -1,6 +1,9 @@
 package mvc_challenge.superstore;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
@@ -8,7 +11,8 @@ public class Order implements Serializable {
   private String id;
   private String category;
   private Item item;
-  private String date;
+  @DateTimeFormat(pattern = "yyyy-MM-dd")
+  private Date date;
 
   public Order(Item item) {
     this.id = UUID.randomUUID().toString();
@@ -39,12 +43,22 @@ public class Order implements Serializable {
     this.item = item;
   }
 
-  public String getDate() {
+  public Date getDate() {
     return date;
   }
 
-  public void setDate(String date) {
+  // [IMPORTANT] @DateTimeFormat will parse String type from the client
+  // into Date type.
+  public void setDate(Date date) {
     this.date = date;
+  }
+
+  // [IMPORTANT!!!!]
+  // it can be called as `order.formatData` in Thymeleaf.
+  // Please find the comments in `inventory.html`
+  public String getFormatDate() {
+    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+    return formatter.format(date);
   }
 
   @Override
