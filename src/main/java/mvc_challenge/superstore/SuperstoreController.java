@@ -7,12 +7,22 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.net.http.HttpClient;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 import java.util.concurrent.TimeUnit;
+
+/**
+ * Learn:
+ * 1. Double type can be automatically parsed from String of the client input.
+ * 2. Date is not automatically parsed from String so that we need to implement
+ *    an annotation `@DateTimeFormat(pattern = "yyyy-MM-dd")`
+ * 3. The client can directly call a method with a POJO class instance by implementing for example,
+ *    `getFormatDate` can be called as `order.formatData` in Thymeleaf.
+ *    Please find the comments in `inventory.html`
+ * 4. FlashAttribute can be added in `submitHandler` function
+ *    to put additional properties in `model.addAttribute`
+ */
 
 @Controller
 public class SuperstoreController {
@@ -21,7 +31,6 @@ public class SuperstoreController {
   @GetMapping("/")
   public String getForm(Model model, @RequestParam(required = false) String id) throws IndexOutOfBoundsException {
     Order order;
-
     int index = getIndex(id);
 
     if (index > -1) {
@@ -38,9 +47,10 @@ public class SuperstoreController {
   }
 
   @PostMapping("/handleSubmit")
+  // RedirectAttributes: "FlashAttribute: which is a data that survives a `redirect`
   public String handleOrderSubmit(Order order, RedirectAttributes redirectAttributes) {
     int index = getIndex(order.getId());
-    String flashString;
+    String flashString = Constants.SUCCESS;
 
     if (index > -1) {
       Date newDate = order.getDate();
@@ -48,17 +58,12 @@ public class SuperstoreController {
 
       if (!within5Days(newDate, oldDate)) {
         flashString = Constants.FAIL;
-
       } else {
-        flashString = Constants.SUCCESS;
         orders.set(index, order);
       }
-
     } else {
-      flashString = Constants.SUCCESS;
       orders.add(order);
     }
-
 
     // add a flash attribute
     redirectAttributes.addFlashAttribute("status", flashString);

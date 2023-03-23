@@ -54,7 +54,7 @@ public class Order implements Serializable {
   }
 
   // [IMPORTANT!!!!]
-  // it can be called as `order.formatData` in Thymeleaf.
+  // It can be called as `order.formatData` in Thymeleaf.
   // Please find the comments in `inventory.html`
   public String getFormatDate() {
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
