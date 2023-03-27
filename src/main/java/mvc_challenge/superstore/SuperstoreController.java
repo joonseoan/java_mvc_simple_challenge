@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
  * 1. Double type can be automatically parsed from String of the client input.
  * 2. Date is not automatically parsed from String so that we need to implement
  *    an annotation `@DateTimeFormat(pattern = "yyyy-MM-dd")`
- * 3. The client can directly call a method with a POJO class instance by implementing for example,
+ * 3. The client can directly call a method in a POJO class instance by implementing for example,
  *    `getFormatDate` can be called as `order.formatData` in Thymeleaf.
  *    Please find the comments in `inventory.html`
  * 4. FlashAttribute can be added in `submitHandler` function
@@ -29,7 +29,7 @@ public class SuperstoreController {
   private List<Order> orders = new ArrayList<>();
 
   @GetMapping("/")
-  public String getForm(Model model, @RequestParam(required = false) String id) throws IndexOutOfBoundsException {
+  public String getForm(Model model, @RequestParam(required = false) String id) {
     Order order;
     int index = getIndex(id);
 
@@ -48,6 +48,7 @@ public class SuperstoreController {
 
   @PostMapping("/handleSubmit")
   // RedirectAttributes: "FlashAttribute: which is a data that survives a `redirect`
+  // It is placed as a last parameter.
   public String handleOrderSubmit(Order order, RedirectAttributes redirectAttributes) {
     int index = getIndex(order.getId());
     String flashString = Constants.SUCCESS;
