@@ -22,6 +22,7 @@ import java.util.concurrent.TimeUnit;
  *    Please find the comments in `inventory.html`
  * 4. FlashAttribute can be added in `submitHandler` function
  *    to put additional properties in `model.addAttribute`
+ * 5. Date getTime() in MiliSeconds to days through TimeUnit.MILLISECONDS.toDays(diff) <= 5
  */
 
 @Controller
