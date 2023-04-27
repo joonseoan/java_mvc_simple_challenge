@@ -1,5 +1,7 @@
 package mvc_challenge.superstore;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Past;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
@@ -9,14 +11,18 @@ import java.util.UUID;
 
 public class Order implements Serializable {
   private String id;
+  @NotBlank(message = "Please choose a category.")
   private String category;
   private Item item;
+
+  // Need to add validation for null for date.
   @DateTimeFormat(pattern = "yyyy-MM-dd")
+  @Past(message = "Order date must be in the past")
   private Date date;
 
   public Order(Item item) {
     this.id = UUID.randomUUID().toString();
-    this.item = item;
+    this.item =  item;
   }
 
   public String getId() {
@@ -67,7 +73,7 @@ public class Order implements Serializable {
     return "Orders{" +
             "category='" + category + '\'' +
             ", id='" + id + '\'' +
-            ", item=" + item +
+//            ", item=" + item +
             ", date=" + date +
             '}';
   }

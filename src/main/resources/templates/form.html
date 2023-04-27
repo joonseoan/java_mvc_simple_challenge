@@ -15,7 +15,7 @@
                     <option style="color:blue" th:value="${''}">Choose Category</option>
                     <option th:each="category: ${categories}" th:text="${category}" th:value="${category}"></option>
                 </select>
-                    <input type="text" placeholder="Name" th:field="*{item.name}">
+                <input type="text" placeholder="Name" th:field="*{item.name}">
                 <input class="half" type="text" placeholder="Price" th:field="*{item.price}">
                 <input class="half" type="text" placeholder="Discount" th:field="*{item.discount}">
                 <h4>Order Date</h4>

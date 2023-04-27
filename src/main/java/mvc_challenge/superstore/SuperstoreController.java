@@ -1,7 +1,9 @@
 package mvc_challenge.superstore;
 
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -50,7 +52,20 @@ public class SuperstoreController {
   @PostMapping("/handleSubmit")
   // RedirectAttributes: "FlashAttribute: which is a data that survives a `redirect`
   // It is placed as a last parameter.
-  public String handleOrderSubmit(Order order, RedirectAttributes redirectAttributes) {
+  public String handleOrderSubmit(
+          @Valid
+          Order order,
+          BindingResult result,
+          RedirectAttributes redirectAttributes
+  ) {
+
+    System.out.println("category: " + order.getCategory());
+    System.out.println("Has Error: " + result.hasErrors());
+
+    if (result.hasErrors()) {
+      return "form";
+    }
+
     int index = getIndex(order.getId());
     String flashString = Constants.SUCCESS;
 
