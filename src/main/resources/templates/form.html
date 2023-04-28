@@ -11,14 +11,28 @@
         <div class="container">    
             <h2> Global Superstore </h2>
             <form method="post" th:object="${order}" th:action="@{/handleSubmit}">
+                <p style="color: red" th:errors="*{category}"></p>
+                <!-- 2) By using HTML                -->
                 <select class="select" th:field="*{category}">
-                    <option style="color:blue" th:value="${''}">Choose Category</option>
-                    <option th:each="category: ${categories}" th:text="${category}" th:value="${category}"></option>
+                    <option style="color: blue" th:value="${''}">Choose Category</option>
+                    <option style="color:blue" value="Furniture">Furniture</option>
+                    <option style="color:blue" value="Office Supplies">Office Supplies</option>
+                    <option style="color:blue" value="Technology">Technology</option>
                 </select>
+
+                <!-- 1) By using the controller's handler -->
+<!--                <select class="select" th:field="*{category}">-->
+<!--                    <option style="color: blue" th:value="${''}">Choose Category</option>-->
+<!--                    <option th:each="category: ${categories}" th:text="${category}" th:value="${category}"></option>-->
+<!--                </select>-->
+                <p style="color: red" th:errors="*{item.name}"></p>
                 <input type="text" placeholder="Name" th:field="*{item.name}">
+                <p style="color: red" th:errors="*{item.price}"></p>
                 <input class="half" type="text" placeholder="Price" th:field="*{item.price}">
+                <p style="color: red" th:errors="*{item.discount}"></p>
                 <input class="half" type="text" placeholder="Discount" th:field="*{item.discount}">
                 <h4>Order Date</h4>
+                <p style="color: red" th:errors="*{date}"></p>
                 <input type="date" style="color:black" th:field="*{date}">
                 <input type="hidden" th:field="*{id}">
                 <input type="submit" value="Submit Item">

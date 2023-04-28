@@ -43,7 +43,8 @@ public class SuperstoreController {
       order = new Order(item);
     }
 
-    model.addAttribute("categories", Constants.CATEGORIES);
+    // 1) It can be set directly in the HTML file as well.
+//    model.addAttribute("categories", Constants.CATEGORIES);
     model.addAttribute("order", order);
 
     return "form";
@@ -58,10 +59,6 @@ public class SuperstoreController {
           BindingResult result,
           RedirectAttributes redirectAttributes
   ) {
-
-    System.out.println("category: " + order.getCategory());
-    System.out.println("Has Error: " + result.hasErrors());
-
     if (result.hasErrors()) {
       return "form";
     }

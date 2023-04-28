@@ -1,5 +1,6 @@
 package mvc_challenge.superstore;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Past;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -13,6 +14,11 @@ public class Order implements Serializable {
   private String id;
   @NotBlank(message = "Please choose a category.")
   private String category;
+
+  // [IMPORTANT!!!]
+  // When we need to a child class,
+  // we can validate the child class's field with `@Valid`
+  @Valid
   private Item item;
 
   // Need to add validation for null for date.

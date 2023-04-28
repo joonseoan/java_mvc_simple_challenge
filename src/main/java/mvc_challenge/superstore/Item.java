@@ -8,10 +8,11 @@ import java.io.Serializable;
 public class Item implements Serializable {
   @NotBlank(message = "Name cannot be blank.")
   private String name;
-  @NotBlank(message = "Price cannot be blank")
+  // Need to check out how to validate the empty value for double. ---> Custom validation?
+//  @NotBlank(message = "Price cannot be blank")
   @Min(value = 0, message = "Price cannot be negative.")
   private Double price;
-  @NotBlank(message = "Discount cannot be blank")
+//  @NotBlank(message = "Discount cannot be blank")
   @Min(value = 0, message = "Discount cannot be negative.")
   private Double discount;
 
