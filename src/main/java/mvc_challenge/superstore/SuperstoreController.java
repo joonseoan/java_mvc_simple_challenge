@@ -25,6 +25,10 @@ import java.util.concurrent.TimeUnit;
  * 4. FlashAttribute can be added in `submitHandler` function
  *    to put additional properties in `model.addAttribute`
  * 5. Date getTime() in MiliSeconds to days through TimeUnit.MILLISECONDS.toDays(diff) <= 5
+ * 6. The nested field validation @Valid Item item
+ * 7. Cross-validation check for the nested field
+ * 8. API validation does not support the validation for @NotBlank of Number and Date types
+ *    Will need to provide the custom validation.
  */
 
 @Controller
@@ -59,6 +63,19 @@ public class SuperstoreController {
           BindingResult result,
           RedirectAttributes redirectAttributes
   ) {
+    if (order.getItem().getPrice() < order.getItem().getDiscount()) {
+      /*
+       * bindingResult.rejectValue(arg1, arg2, arg3):
+       * - arg1: identifies which field the error is associated with.
+       * - arg2: error code which acts a message key for the messages.properties file
+       *   (or messages_en.properties or messages_fr.properties etc., if these are being used).
+       * - arg3: Error Message
+       * */
+      // arg2 is not required to be used here.
+      // [IMPORTANT]: it is the way to get the nested field.
+      result.rejectValue("item.price", "", "Price cannot be less than the discount.");
+    }
+
     if (result.hasErrors()) {
       return "form";
     }
