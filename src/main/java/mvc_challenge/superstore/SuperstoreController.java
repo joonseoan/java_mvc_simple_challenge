@@ -60,6 +60,7 @@ public class SuperstoreController {
   public String handleOrderSubmit(
           @Valid
           Order order,
+//        [IMPORTANT!!!] BindingResult must be after @Valid!!!
           BindingResult result,
           RedirectAttributes redirectAttributes
   ) {
